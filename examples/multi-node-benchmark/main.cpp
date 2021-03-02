@@ -22,17 +22,27 @@
  */
 
 #include <string>
-
+#include <cstdlib>
 #include "testclient.h"
 #include "helpers.h"
 
 
 int main(int argc, char **argv)
     {
+    string clientId = Helpers::randomString(8);
+    if (argc == 2)
+        {
+        clientId = argv[1];
+        }
+        
     string wsUrl = "ws://localhost:8080/";
+    if (std::getenv("WS_URL"))
+        {
+        wsUrl = std::getenv("WS_URL");
+        }
+        
     TestClient client;
-    
-    client.start(Helpers::randomString(8), wsUrl);
+    client.start(clientId, wsUrl);
     }
 
 /*
